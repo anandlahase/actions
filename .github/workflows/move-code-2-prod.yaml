@@ -1,23 +1,25 @@
 name: Copy Files to Prod
 
-# tasks:
-#   - find:
-#       paths: "non-prod/dedicated/extraVars"
-#       recurse: true
-#     register: extraVar_path
-on:
-  workflow_dispatch:
+tasks:
   - find:
       paths: "non-prod/dedicated/extraVars"
       recurse: true
     register: extraVar_path
+on:
+  workflow_dispatch:
     inputs:
       choice:
         type: choice
         description: 'Source folder (non-prod)'
-        options: "{{ item.0 }}"
+        options: 
+        
+        - option1 
+        - option2
+        - option3
+
+        
         required: true
-        with_items: "{{ extraVar_path }}"
+      
       destination-folder:
         description: 'Destination folder (prod)'
         required: true
