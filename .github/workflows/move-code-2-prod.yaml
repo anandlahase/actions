@@ -17,10 +17,10 @@ on:
         description: 'Source folder (non-prod)'
         options: "{{ item.0 }}"
         required: true
+        with_items: "{{ extraVar_path }}"
       destination-folder:
         description: 'Destination folder (prod)'
         required: true
-      with_items: "{{ extraVar_path }}"
 
 jobs:
   copy_files:
