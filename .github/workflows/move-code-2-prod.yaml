@@ -11,18 +11,12 @@ on:
       choice:
         type: choice
         description: 'Source folder (non-prod)'
-        options: "{{ item.files }}"
-        with_items: "{{ extraVar_path }}"
-        #loop: "{{ extraVar_path.files|filename }}"
-      #source-folder:
+        options: "{{ item.0 }}"
         required: true
-        # loop:
-        #   - apple
-        #   - banana
-        #   - pear
       destination-folder:
         description: 'Destination folder (prod)'
         required: true
+      with_items: "{{ extraVar_path }}"
 
 jobs:
   copy_files:
