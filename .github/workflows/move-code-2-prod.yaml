@@ -3,8 +3,14 @@ name: Copy Files to Prod
 on:
   workflow_dispatch:
     inputs:
-      source-folder:
+      choice:
+        type: choice
         description: 'Source folder (non-prod)'
+        options:
+        - option1 
+        - option2
+        - option3
+      #source-folder:
         required: true
       destination-folder:
         description: 'Destination folder (prod)'
