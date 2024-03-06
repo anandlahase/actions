@@ -11,14 +11,14 @@ on:
       choice:
         type: choice
         description: 'Source folder (non-prod)'
-        options: "{{ extraVar_path.files }}"
+        options: 
         # loop:
         #   - apple
         #   - banana
         #   - pear
-        #- option1 
-        #- option2
-        #- option3
+        - option1 
+        - option2
+        - option3
         #loop: "{{ extraVar_path.files|filename }}"
       #source-folder:
         required: true
