@@ -19,5 +19,6 @@ jobs:
 
       - name: Copy files
         run: |
-          mkdir -p ${{ inputs.destination-folder }}
-          cp -r ${{ inputs.source-folder }}/* ${{ inputs.destination-folder }}
+          cp -r ${{ inputs.source-folder }}/deploymentManifest/** ${{ inputs.destination-folder }}/deploymentManifest/**
+          cp -r ${{ inputs.source-folder }}/extraVars/** ${{ inputs.destination-folder }}/extraVars/**
+          cp -r ${{ inputs.source-folder }}/inventory/** ${{ inputs.destination-folder }}/inventory/**
