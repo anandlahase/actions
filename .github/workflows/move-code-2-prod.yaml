@@ -1,25 +1,37 @@
-name: Copy Files to Prod
+name: Move Code to Prod
 
 on:
   workflow_dispatch:
     inputs:
       source-folder:
-        description: 'Source folder (non-prod)'
-        paths:
-        - prod/dedicated/inventory/**
+        description: 'Source folder path'
         required: true
+        default: 'non-prod/dedicated'
       destination-folder:
-        description: 'Destination folder (prod)'
+        description: 'Destination folder path'
         required: true
+        default: 'prod/dedicated'
 
 jobs:
-  copy_files:
+  move_to_prod:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
-      - name: Copy files to prod
-        run: |
-          mkdir -p ${{ inputs.destination-folder }}/prod/dedicated/inventory/**
-          cp -r ${{ inputs.source-folder }}/non-prod/dedicated/inventory/** ${{ inputs.destination-folder }}/prod/dedicated/inventory/**
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create destination folders
+      run: |
+        mkdir -p ${{ inputs.destination-folder }}/deploymentManifest
+        mkdir -p ${{ inputs.destination-folder }}/extraVars
+        mkdir -p ${{ inputs.destination-folder }}/inventory
+
+    - name: Move deploymentManifest
+      run: mv ${{ inputs.source-folder }}/deploymentManifest/ ${{ inputs.destination-folder }}/deploymentManifest/
+
+    - name: Move extraVars
+      run: mv ${{ inputs.source-folder }}/extraVars/ ${{ inputs.destination-folder }}/extraVars/
+
+    - name: Move inventory
+      run: mv ${{ inputs.source-folder }}/inventory/ ${{ inputs.destination-folder }}/inventory/
