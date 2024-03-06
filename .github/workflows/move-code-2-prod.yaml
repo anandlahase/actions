@@ -1,5 +1,10 @@
 name: Copy Files to Prod
 
+tasks:
+  - find:
+      paths: "non-prod/dedicated/extraVars"
+      recurse: true
+    register: extraVar_path
 on:
   workflow_dispatch:
     inputs:
@@ -10,6 +15,7 @@ on:
         - option1 
         - option2
         - option3
+        - loop: "{{ extraVar_path.files|filename }}"
       #source-folder:
         required: true
       destination-folder:
