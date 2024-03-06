@@ -1,0 +1,238 @@
+{
+    "version": "1.1.0",
+    "kind": "resource",
+    "type": "template",
+    "subtype": "image-mapping",
+    "environment": "prod",
+    "metadata": {
+        "guid": "9c3d9d84-581c-470c-996c-e3f423cab5f5",
+        "uuid": "edcd17b6-defd-4fd9-904c-d3d0c6145728",
+        "name": "VM OS Image mapping",
+        "description": "The template to provide application VM OS Image mapping",
+        "created": "2023-11-23T12:00:00",
+        "creator": "AEC Automation",
+        "updated": "2023-12-07T12:00:00",
+        "modifier": "AEC Automation"
+    },
+    "applications": {
+        "sm": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "lds": {
+            "image": {
+                "gallery": "cgal_ocp_rhel86_eastus",
+                "name": "img-appbase-rhel86-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "2.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "sentry": {
+            "image": {
+                "gallery": "cgal_ocp_win19v2_eastus",
+                "name": "img-appbase-win19-hardened-v2",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "2.2.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "aads": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "aawg": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "sbc": {
+            "image": {
+                "gallery": "cgaL_ocp_sbce_eastus",
+                "name": "img-appbase-sbce-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "1.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "ems": {
+            "image": {
+                "gallery": "cgaL_ocp_sbce_eastus",
+                "name": "img-appbase-sbce-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "1.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "ams": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "cm": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "um": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "ixmvsn": {
+            "image": {
+                "gallery": "cgal_ocp_win19v2_eastus",
+                "name": "img-appbase-win19-hardened-v2",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "2.2.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "ixmcs": {
+            "image": {
+                "gallery": "cgal_ocp_win19v2_eastus",
+                "name": "img-appbase-win19-hardened-v2",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "2.2.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "smtprelay": {
+            "image": {
+                "gallery": "cgal_ocp_rhel86_eastus",
+                "name": "img-appbase-rhel86-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "2.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "stfsh": {
+            "image": {
+                "gallery": "cgal_ocp_win19v2_eastus",
+                "name": "img-appbase-win19-hardened-v2",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "2.2.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "vtm": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "winad": {
+            "image": {}
+        },
+        "cms": {
+            "image": {
+                "gallery": "cgal_ocp_cms_eastus",
+                "name": "CMS-R19.2.0.4.gf.b",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "2.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "aes": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "sal": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "smgr": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "cbacore": {
+            "image": {
+                "gallery": "cgal_ocp_cba_core_eastus",
+                "name": "CBA-Core-5.0.1.5",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "1.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "cbadb": {
+            "image": {
+                "gallery": "cgal_ocp_cba_core_eastus",
+                "name": "CBA-Core-5.0.1.5",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "1.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "cbareport": {
+            "image": {
+                "gallery": "cgaL_ocp_cba_reporting_eastus",
+                "name": "CBA-Reporting-5.0.1.4",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "2.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "epm": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        },
+        "mpp": {
+            "image": {
+                "gallery": "cgal_ocp_rhel84_eastus",
+                "name": "img-appbase-rhel84-hardened-v1",
+                "rg": "rg-shSrv-vmImageHardening-eastus-prod",
+                "version": "3.0.0",
+                "subscription": "554227fb-326d-4500-92c8-c92c958c1c81"
+            }
+        }
+    }
+}
