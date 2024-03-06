@@ -7,14 +7,10 @@ on:
         description: 'Source folder path
         required: true
         default: 'non-prod/dedicated'
-        paths:
-        - 'non-prod/deploymentManifests/**'
       destination-folder:
         description: 'Destination folder path'
         required: true
         default: 'prod/dedicated'
-        paths:
-        - 'prod/deploymentManifests/**'
 
 jobs:
   move_to_prod:
