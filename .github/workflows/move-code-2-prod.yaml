@@ -11,8 +11,7 @@ on:
       choice:
         type: choice
         description: 'Source folder (non-prod)'
-        options:
-          "{{ items }}"
+        options: "{{ items }}"
         loop:
           - apple
           - banana
