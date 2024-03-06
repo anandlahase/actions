@@ -1,12 +1,16 @@
 name: Copy Files to Prod
 
-tasks:
+# tasks:
+#   - find:
+#       paths: "non-prod/dedicated/extraVars"
+#       recurse: true
+#     register: extraVar_path
+on:
+  workflow_dispatch:
   - find:
       paths: "non-prod/dedicated/extraVars"
       recurse: true
     register: extraVar_path
-on:
-  workflow_dispatch:
     inputs:
       choice:
         type: choice
