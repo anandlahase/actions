@@ -16,7 +16,7 @@ jobs:
   move_to_prod:
     runs-on: ubuntu-latest
 
-    inputs:
+    inputs1:
       source-folder:
         description: 'Source folder path'
         required: true
