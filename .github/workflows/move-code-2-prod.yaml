@@ -4,13 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       source-folder:
-        description: 'non-prod/dedicated/inventory'
+        description: 'Source folder path
         required: true
         default: 'non-prod/dedicated'
+      paths:
+      - 'non-prod/deploymentManifests/**'
       destination-folder:
         description: 'Destination folder path'
         required: true
         default: 'prod/dedicated'
+      paths:
+      - 'prod/deploymentManifests/**'
+    workflow_dispatch:
 
 jobs:
   move_to_prod:
