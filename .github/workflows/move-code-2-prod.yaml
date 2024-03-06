@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       source-folder:
-        description: 'Source folder path'
+        description: 'non-prod/dedicated/inventory'
         required: true
         default: 'non-prod/dedicated'
       destination-folder:
