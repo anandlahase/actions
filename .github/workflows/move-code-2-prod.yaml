@@ -16,7 +16,9 @@ on:
         - option1 
         - option2
         - option3
-        - extraVar_path.files
+        {% for item in extraVar_path.files %}
+          - {{ item }}
+        { % endfor %}
         #loop: "{{ extraVar_path.files|filename }}"
       #source-folder:
         required: true
