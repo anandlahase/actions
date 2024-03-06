@@ -16,14 +16,14 @@ on:
         - option1 
         - option2
         - option3
-        - "{{ items }}"
+        - extraVar_path.files
         #loop: "{{ extraVar_path.files|filename }}"
       #source-folder:
         required: true
-        loop:
-          - apple
-          - banana
-          - pear
+        # loop:
+        #   - apple
+        #   - banana
+        #   - pear
       destination-folder:
         description: 'Destination folder (prod)'
         required: true
