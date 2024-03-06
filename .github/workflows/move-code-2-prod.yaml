@@ -15,7 +15,7 @@ on:
         - option1 
         - option2
         - option3
-        loop: "{{ extraVar_path.files|filename }}"
+          loop: "{{ extraVar_path.files|filename }}"
       #source-folder:
         required: true
       destination-folder:
