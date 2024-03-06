@@ -15,7 +15,6 @@ on:
         default: 'prod/dedicated'
       paths:
       - 'prod/deploymentManifests/**'
-    workflow_dispatch:
 
 jobs:
   move_to_prod:
