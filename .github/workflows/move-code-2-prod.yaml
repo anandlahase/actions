@@ -5,17 +5,9 @@ on:
     inputs:
       source-folder:
         description: 'Source folder (non-prod)'
-	        paths:
-	        - ‘non-prod/dedicated/deploymentManifest/**’
-	        - ‘non-prod/dedicated/extraVars/**’
-	        - ‘non-prod/dedicated/inventory/**’
         required: true
         destination-folder:
         description: 'Destination folder (prod)'
-	        paths:
-	        - ‘non-prod/dedicated/deploymentManifest/**’
-	        - ‘non-prod/dedicated/extraVars/**’
-	        - ‘non-prod/dedicated/inventory/**’
         required: true
 
 jobs:
@@ -27,5 +19,5 @@ jobs:
 
       - name: Copy files to prod
         run: |
-          mkdir -p ${{ inputs.destination-folder }}
-          cp -r ${{ inputs.source-folder }}/* ${{ inputs.destination-folder }}
+          mkdir -p ${{ inputs.destination-folder }}/non-prod/dedicated/deploymentManifest/**
+          cp -r ${{ inputs.source-folder }}/non-prod/dedicated/deploymentManifest/** ${{ inputs.destination-folder }}non-prod/dedicated/deploymentManifest/**
