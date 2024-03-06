@@ -5,6 +5,8 @@ on:
     inputs:
       source-folder:
         description: 'Source folder (non-prod)'
+        paths:
+        - prod/dedicated/inventory/**
         required: true
       destination-folder:
         description: 'Destination folder (prod)'
