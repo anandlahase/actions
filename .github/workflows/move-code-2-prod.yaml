@@ -12,7 +12,7 @@ on:
         type: choice
         description: 'Source folder (non-prod)'
         options:
-        {{ extraVar_path.files|filename }}
+          {{ extraVar_path.files|filename }}
         #- option1 
         #- option2
         #- option3
