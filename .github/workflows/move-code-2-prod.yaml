@@ -11,14 +11,8 @@ on:
       choice:
         type: choice
         description: 'Source folder (non-prod)'
-        options: 
-        
-        - option1 
-        - option2
-        - option3
-        {% for item in extraVar_path.files %}
-          - {{ item }}
-        { % endfor %}
+        options: "{{ item }}"
+        with_items: "{{ extraVar_path.files }}"
         #loop: "{{ extraVar_path.files|filename }}"
       #source-folder:
         required: true
