@@ -5,17 +5,17 @@ on:
     inputs:
       source-folder:
         description: 'Source folder (non-prod)'
-	      paths:
-	      - ‘non-prod/dedicated/deploymentManifest/**’
-	      - ‘non-prod/dedicated/extraVars/**’
-	      - ‘non-prod/dedicated/inventory/**’
+	        paths:
+	        - ‘non-prod/dedicated/deploymentManifest/**’
+	        - ‘non-prod/dedicated/extraVars/**’
+	        - ‘non-prod/dedicated/inventory/**’
         required: true
         destination-folder:
         description: 'Destination folder (prod)'
-	      paths:
-	      - ‘non-prod/dedicated/deploymentManifest/**’
-	      - ‘non-prod/dedicated/extraVars/**’
-	      - ‘non-prod/dedicated/inventory/**’
+	        paths:
+	        - ‘non-prod/dedicated/deploymentManifest/**’
+	        - ‘non-prod/dedicated/extraVars/**’
+	        - ‘non-prod/dedicated/inventory/**’
         required: true
 
 jobs:
