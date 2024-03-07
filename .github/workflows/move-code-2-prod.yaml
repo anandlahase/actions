@@ -1,17 +1,36 @@
+name: Copy Files
+
 on:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:  # This event triggers the workflow manually
 
 jobs:
-  copy_file:
+  copy_files:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Copy File
-      run: |
-        cp non-prod/dedicated/extraVars/**
-        git add prod/dedicated/extraVars/
-        git commit -m "Copy file to destination"
-        git push origin main
+      - name: Copy extraVars
+        run: |
+          mkdir -p prod/dedicated/extraVars/
+          cp -r Source/non-prod/dedicated/extraVars/* prod/dedicated/extraVars/
+
+      - name: Copy inventory
+        run: |
+          mkdir -p prod/dedicated/inventory/
+          cp -r Source/non-prod/dedicated/inventory/* prod/dedicated/inventory/
+
+      - name: Show directory structure
+        run: ls -R prod
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Copy files from Source to destination
+          commit_options: '--no-verify'
+          branch: main  # Change this to your main branch name
+          commit_user_name: GitHub Actions
+          commit_user_email: actions@github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
