@@ -16,10 +16,6 @@ jobs:
           mkdir -p prod/dedicated/extraVars/
           cp -r non-prod/dedicated/extraVars/* prod/dedicated/extraVars/
 
-      - name: Copy inventory
-        run: |
-          mkdir -p prod/dedicated/inventory/
-          cp -r non-prod/dedicated/inventory/* prod/dedicated/inventory/
 
       - name: Show directory structure
         run: ls -R prod
