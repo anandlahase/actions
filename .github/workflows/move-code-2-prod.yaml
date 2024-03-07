@@ -1,37 +1,14 @@
-name: Copy Files to Prod
-
-tasks:
-  - find:
-      paths: "non-prod/dedicated/extraVars"
-      recurse: true
-    register: extraVar_path
+name: Move Files
+ 
 on:
-  workflow_dispatch:
-    inputs:
-      choice:
-        type: choice
-        description: 'Source folder (non-prod)'
-        options: 
-        
-        - option1 
-        - option2
-        - option3
-
-        
-        required: true
-      
-      destination-folder:
-        description: 'Destination folder (prod)'
-        required: true
-
+  push:
+    branches: [ main ]
+ 
 jobs:
-  copy_files:
+  move-files:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Copy files to prod
+      - uses: actions/checkout@v3
+      - name: Move all files from source to docs
         run: |
-          mkdir -p ${{ inputs.destination-folder }}
-          cp -r ${{ inputs.source-folder }}/* ${{ inputs.destination-folder }}
+          git mv non-prod/dedicated/extraVars/* prod/dedicated/extraVars
