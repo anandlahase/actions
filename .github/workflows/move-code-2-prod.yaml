@@ -24,7 +24,7 @@ jobs:
       - name: Show directory structure
         run: |
           echo "Directory structure:"
-          find prod
+          find non-prod
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
