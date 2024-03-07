@@ -3,6 +3,16 @@ name: Move Files
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: 'Source folder (non-prod)'
+        options: 
+        
+        - option1 
+        - option2
+        - option3
  
 jobs:
   move-files:
@@ -11,4 +21,4 @@ jobs:
       - uses: actions/checkout@v3
       - name: Move all files from source to docs
         run: |
-          git mv non-prod/dedicated/extraVars/* prod/dedicated/extraVars
+          git cp -r non-prod/dedicated/extraVars/* prod/dedicated/extraVars
