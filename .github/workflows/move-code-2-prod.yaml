@@ -14,4 +14,4 @@ jobs:
         cp non-prod/dedicated/extraVars/**
         git add prod/dedicated/extraVars/
         git commit -m "Copy file to destination"
-        git push origin branch-name
+        git push origin main
