@@ -1,24 +1,17 @@
-name: Move Files
- 
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
-    inputs:
-      choice:
-        type: choice
-        description: 'Source folder (non-prod)'
-        options: 
-        
-        - option1 
-        - option2
-        - option3
- 
+  workflow_dispatch:  # Allows manual triggering
+
 jobs:
-  move-files:
+  copy_file:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Move all files from source to docs
-        run: |
-          git cp -r non-prod/dedicated/extraVars/* prod/dedicated/extraVars
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Copy File
+      run: |
+        cp non-prod/dedicated/extraVars/**
+        git add prod/dedicated/extraVars/
+        git commit -m "Copy file to destination"
+        git push origin branch-name
