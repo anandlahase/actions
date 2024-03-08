@@ -11,17 +11,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create destination directories
-        run: mkdir -p ${{ github.workspace }}/prod/dedicated/extraVars ${{ github.workspace }}/prod/dedicated/inventory
-
       - name: Copy extraVars directory
         run: cp -R non-prod/dedicated/extraVars/* ${{ github.workspace }}/prod/dedicated/extraVars/
-        
-      - name: Copy inventory directory
-        run: cp -R non-prod/dedicated/inventory/* ${{ github.workspace }}/prod/dedicated/inventory/
 
       - name: List contents of extraVars directory
         run: ls -l ${{ github.workspace }}/prod/dedicated/extraVars/
-
-      - name: List contents of inventory directory
-        run: ls -l ${{ github.workspace }}/prod/dedicated/inventory/
