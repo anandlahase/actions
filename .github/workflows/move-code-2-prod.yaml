@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Copy extraVars directory
-        run: cp -R non-prod/dedicated/extraVars/* ${{ github.workspace }}/prod/dedicated/extraVars/
+        run: cp -R non-prod/dedicated/extraVars/* prod/dedicated/extraVars/
 
       - name: List contents of extraVars directory
-        run: ls -l ${{ github.workspace }}/prod/dedicated/extraVars/
+        run: ls -l prod/dedicated/extraVars/
