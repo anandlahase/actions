@@ -7,18 +7,27 @@ jobs:
   copy_files:
     runs-on: ubuntu-latest
 
+    inputs:
+      destination-dir:
+        description: 'Destination directory'
+        required: true
+        default: 'prod/dedicated/'
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Create destination directories
+        run: mkdir -p ${{ inputs.destination-dir }}/extraVars ${{ inputs.destination-dir }}/inventory
+
       - name: Copy extraVars directory
-        run: cp -R non-prod/dedicated/extraVars/* prod/dedicated/extraVars/
+        run: cp -R non-prod/dedicated/extraVars/* ${{ inputs.destination-dir }}/extraVars/
         
       - name: Copy inventory directory
-        run: cp -R non-prod/dedicated/inventory/* prod/dedicated/inventory/
+        run: cp -R non-prod/dedicated/inventory/* ${{ inputs.destination-dir }}/inventory/
 
       - name: List contents of extraVars directory
-        run: ls -l prod/dedicated/extraVars/
+        run: ls -l ${{ inputs.destination-dir }}/extraVars/
 
       - name: List contents of inventory directory
-        run: ls -l prod/dedicated/inventory/
+        run: ls -l ${{ inputs.destination-dir }}/inventory/
