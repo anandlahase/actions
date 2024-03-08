@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Create destination directories
         run: mkdir -p ${{ github.workspace }}/prod/dedicated/extraVars ${{ github.workspace }}/prod/dedicated/inventory
