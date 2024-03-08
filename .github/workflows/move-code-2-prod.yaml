@@ -7,25 +7,15 @@ jobs:
   copy_files:
     runs-on: ubuntu-latest
 
-    inputs:
-      source-path:
-        description: 'Source directory'
-        required: true
-        default: 'non-prod/dedicated/extraVars/'
-      destination-path:
-        description: 'Destination directory'
-        required: true
-        default: 'prod/dedicated/extraVars/'
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: List contents of source directory
-        run: ls -l ${{ inputs.source-path }}
+        run: ls -l ${{ github.workspace }}/non-prod/dedicated/extraVars/
 
       - name: Copy files to destination directory
-        run: cp -R ${{ inputs.source-path }}/* ${{ inputs.destination-path }}/
+        run: cp -R ${{ github.workspace }}/non-prod/dedicated/extraVars/* ${{ github.workspace }}/prod/dedicated/extraVars/
 
       - name: List contents of destination directory
-        run: ls -l ${{ inputs.destination-path }}
+        run: ls -l ${{ github.workspace }}/prod/dedicated/extraVars/
