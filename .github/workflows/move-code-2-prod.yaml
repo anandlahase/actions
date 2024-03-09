@@ -15,8 +15,8 @@ jobs:
       - name: Select Source and Destination Paths
         id: user_input
         run: |
-          echo "::set-output name=source_path::$(ls -d */)"
-          echo "::set-output name=destination_path::$(ls -d */)"
+          echo "::set-output name=non-prod/extraVars/*::$(ls -d */)"
+          echo "::set-output name=prod/extraVars/::$(ls -d */)"
 
       - name: Copy Files
         run: |
