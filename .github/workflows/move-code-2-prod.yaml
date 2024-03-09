@@ -15,8 +15,8 @@ jobs:
       - name: Select Source and Destination Paths
         id: user_input
         run: |
-          echo "::set-output name=source_path::main/non-prod/dedicated/extraVars/"
-          echo "::set-output name=destination_path::main/prod/dedicated/extraVars/"
+          echo "::set-output name=source_path::./non-prod/dedicated/extraVars/"
+          echo "::set-output name=destination_path::./prod/dedicated/extraVars/"
 
       - name: List Files in Source Directory
         run: |
