@@ -15,7 +15,7 @@ jobs:
       - name: Select Source and Destination Paths
         id: user_input
         run: |
-          echo "::set-output name=source_path::./non-prod/dedicated/extraVars/"
+          echo "::set-output name=source_path::./non-prod/dedicated/extraVars/*"
           echo "::set-output name=destination_path::./prod/dedicated/extraVars/"
 
       - name: List Files in Source Directory
@@ -24,4 +24,4 @@ jobs:
 
       - name: Copy Files
         run: |
-          cp -r "${{ steps.user_input.outputs.source_path }}.'*" "${{ steps.user_input.outputs.destination_path }}"
+          cp -r "${{ steps.user_input.outputs.source_path }}." "${{ steps.user_input.outputs.destination_path }}"
