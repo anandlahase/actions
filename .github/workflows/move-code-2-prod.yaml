@@ -20,4 +20,4 @@ jobs:
 
       - name: Copy Files
         run: |
-          cp -r "${{ steps.user_input.outputs.source_path }}"* "${{ steps.user_input.outputs.destination_path }}"
+          cp -r "${{ steps.user_input.outputs.source_path }}" "${{ steps.user_input.outputs.destination_path }}"
