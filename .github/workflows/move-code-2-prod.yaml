@@ -16,7 +16,7 @@ jobs:
         id: user_input
         run: |
           echo "::set-output name=non-prod/extraVars/*::$(ls -d */)"
-          echo "::set-output name=prod/extraVars/::$(ls -d */)"
+          echo "::set-output name=prod/extraVars/*::$(ls -d */)"
 
       - name: Copy Files
         run: |
