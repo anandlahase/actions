@@ -7,6 +7,8 @@ on:
         description: 'extraVars'
         required: true
         default: 'extraVars'
+        paths:
+          - './non-prod/dedicated/extraVars/'
       deploymentManifest:
         description: 'deploymentManifest'
         required: true
