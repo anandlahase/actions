@@ -32,13 +32,4 @@ jobs:
 
       - name: Copy Files
         run: |
-          sudo scp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
-
-  destination_files:
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-      - name: copy file to extraVars
-        run: |
-          cp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
-        
+          sudo scp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/      
