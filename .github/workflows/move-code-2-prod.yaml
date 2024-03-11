@@ -1,19 +1,19 @@
 name: Manual File Copy
 
 on:
-
   workflow_dispatch:
     inputs:
       extraVars:
-        description:  'extraVars'
+        description: 'extraVars'
         required: true
-        default: 'null'
+        default: 'main/non-prod/dedicated/extraVars/test.txt'
       deploymentManifest:
-        description:  'deploymentManifest'
+        description: 'deploymentManifest'
         required: true
       inventory:
-        description:  'inventory'
+        description: 'inventory'
         required: true
+
 jobs:
   copy_files:
     name: Copy Files
@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: List files extraVars
-        uses: './non-prod/dedicated/extraVars/* {{ source.extraVars }}'
+      
+      - name: List extraVars Directories
+        run: |
+          echo "Directories in extraVars:"
+          ls -d main/non-prod/dedicated/extraVars/*/
