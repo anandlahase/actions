@@ -13,7 +13,11 @@ on:
       source_directory:
         description: 'Source Directory'
         required: true
-        default: './non-prod/dedicated/extraVars'
+        default: './non-prod/dedicated/'
+      choice:
+        - extraVars
+        - deploymentManifest
+        - inventory
       destination_directory:
         description: 'Destination Directory'
         required: true
