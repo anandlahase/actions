@@ -21,11 +21,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Select Source and Destination Paths
-        id: user_input
+     - name: List Directories
         run: |
-          echo "::set-output name=source_path::main/non-prod/dedicated/extraVars/"
-        
-      - name: Copy Files
-        run: |
-          cp -r "${{ steps.user_input.outputs.source_path }}"* "${{ steps.user_input.outputs.destination_path }}"
+          echo "Directories in the main branch:"
+          git ls-tree -d --name-only main
