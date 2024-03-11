@@ -33,4 +33,4 @@ jobs:
 
       - name: Copy Files
         run: |
-          sudo cp -r "${{ github.event.inputs.source_directory }}"/*.json "${{ github.event.inputs.destination_directory }}"
+          sudo scp -r "${{ github.event.inputs.source_directory }}"/*.json "${{ github.event.inputs.destination_directory }}"
