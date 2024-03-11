@@ -28,6 +28,12 @@ on:
         required: true
         default: 'null'
         type: string
+      branch_directory:
+        description: 'extraVars-'
+        required: true
+        default: 'main/non/prod/dedicated/extraVars/'
+        options:
+          - main/non/prod/dedicated/extraVars/
 jobs:
   copy_files:
     name: Copy Files
