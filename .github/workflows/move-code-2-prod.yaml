@@ -16,7 +16,7 @@ on:
       inventory:
         description:  'inventory'
         required: true
-      options:
+      paths:
           - 'main/non-prod/dedicated/extraVars/**'
           - 'main/non-prod/dedicated/deploymentManifest/**'
           - 'main/non-prod/dedicated/inventory/**'
