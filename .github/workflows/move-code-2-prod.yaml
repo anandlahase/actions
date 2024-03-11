@@ -6,11 +6,11 @@ on:
       source_directory:
         description: 'Source Directory'
         required: true
-        default: './non-prod/dedicated/extraVars/'
+        default: 'non-prod/dedicated/extraVars/'
       destination_directory:
         description: 'Destination Directory'
         required: true
-        default: './prod/dedicated/extraVars/'
+        default: 'prod/dedicated/extraVars/'
 
 jobs:
   copy_files:
