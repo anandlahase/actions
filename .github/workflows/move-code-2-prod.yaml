@@ -16,6 +16,15 @@ on:
       inventory:
         description:  'inventory'
         required: true
+      release_tag:
+        description: 'Release Tag'
+        required: true
+        type: string
+      release_status:
+        description: 'Release Status'
+        required: true
+        default: 'null'
+        type: string
 jobs:
   copy_files:
     name: Copy Files
@@ -25,6 +34,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Copy Files from Branch
+      - name: Copy Files to folder
         run: |
           cp -r ./non-prod/dedicated/extraVars/* ./prod/dedicated/extraVars/
