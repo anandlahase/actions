@@ -14,10 +14,6 @@ on:
       inventory:
         description:  'inventory'
         required: true
-      paths:
-          - 'main/non-prod/dedicated/extraVars/**'
-          - 'main/non-prod/dedicated/deploymentManifest/**'
-          - 'main/non-prod/dedicated/inventory/**'
 jobs:
   copy_files:
     name: Copy Files
