@@ -6,7 +6,7 @@ on:
       extraVars:
         description: 'extraVars'
         required: true
-        default: 'main/non-prod/dedicated/extraVars/test.txt'
+        default: './non-prod/dedicated/extraVars/test.txt'
       deploymentManifest:
         description: 'deploymentManifest'
         required: true
