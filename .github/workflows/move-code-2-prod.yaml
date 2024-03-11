@@ -16,21 +16,10 @@ on:
       inventory:
         description:  'inventory'
         required: true
-      release_tag:
-        description: 'Release Tag'
-        required: true
-        type: string
-      release_status:
-        description: 'Release Status'
-        required: true
-        default: 'null'
-        type: string
-      branch_directory:
-        description: 'extraVars-'
-        required: true
-        default: 'main/non/prod/dedicated/extraVars/'
-        paths:
-          - main/non/prod/dedicated/extraVars/
+      options:
+          - 'main/non-prod/dedicated/extraVars/**'
+          - 'main/non-prod/dedicated/deploymentManifest/**'
+          - 'main/non-prod/dedicated/inventory/**'
 jobs:
   copy_files:
     name: Copy Files
