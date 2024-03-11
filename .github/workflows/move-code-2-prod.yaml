@@ -23,7 +23,7 @@ jobs:
       - name: List Files for extraVars
         run: |
           echo "extraVars Directory Contents:"
-          ls -la "${{ github.event.inputs.source_directory }}"
+          ls -la ./non-prod/dedicated/extraVars/*
 
       - name: List Files in Destination Directory
         run: |
