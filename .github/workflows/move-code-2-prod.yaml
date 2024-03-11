@@ -12,7 +12,7 @@ on:
         - inventory
             
 jobs:
-  copy_files:
+  source_files:
     name: Copy Files
     runs-on: ubuntu-latest
 
@@ -28,19 +28,17 @@ jobs:
       - name: List Files in Destination Directory
         run: |
           echo "Destination Directory Contents:"
-          ls -la "${{ github.event.inputs.destination_directory }}"
+          ls -la ./non-prod/dedicated/extraVars/*
 
       - name: Copy Files
         run: |
-          sudo scp -r "${{ github.event.inputs.source_directory }}/extraVars/*.json "${{ github.event.inputs.destination_directory }}/extraVars/"
+          sudo scp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
 
-  deployment:
+  destination_files:
     runs-on: ubuntu-latest
     environment: production
     steps:
       - name: copy file to extraVars
-        path:
-          ./non-prod/dedicated/extraVars/*
         run: |
           cp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
         
