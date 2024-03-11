@@ -32,4 +32,4 @@ jobs:
 
       - name: Copy Files
         run: |
-          sudo scp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/      
+          sudo cp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/      
