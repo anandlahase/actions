@@ -3,18 +3,13 @@ name: Manual File Copy
 on:
   workflow_dispatch:
     inputs:
-      extraVars:
-        description: 'extraVars'
-        required: true
-        default: 'extraVars'
-        paths:
-          - './non-prod/dedicated/extraVars/'
-      deploymentManifest:
-        description: 'deploymentManifest'
-        required: true
-      Inventory:
-        description: 'inventory'
-        required: true
+      choice:
+        type: choice
+        description: Make a choice
+        options:
+        - extraVars
+        - deploymentManifest
+        - inventory
       
       source_directory:
         description: 'Source Directory'
