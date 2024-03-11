@@ -6,6 +6,14 @@ on:
       extraVars:
         description: 'extraVars'
         required: true
+        default: 'extraVars'
+      deploymentManifest:
+        description: 'deploymentManifest'
+        required: true
+      Inventory:
+        description: 'inventory'
+        required: true
+      
       source_directory:
         description: 'Source Directory'
         required: true
