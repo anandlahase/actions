@@ -23,7 +23,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       
-      - name: List extraVars Directories
+     - name: List Directories
         run: |
-          echo "Directories in extraVars:"
-          ls -d main/non-prod/dedicated/extraVars/*/
+          echo "Directories in the repository:"
+          find . -type d
