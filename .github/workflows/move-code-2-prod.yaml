@@ -3,12 +3,12 @@ name: Manual File Copy
 on:
   workflow_dispatch:
     inputs:
-      source_path:
-        description: 'Source Path'
+      source_directory:
+        description: 'Source Directory'
         required: true
-        default: './non-prod/dedicated/extraVars/**'
-      destination_path:
-        description: 'Destination Path'
+        default: './non-prod/dedicated/extraVars/'
+      destination_directory:
+        description: 'Destination Directory'
         required: true
         default: './prod/dedicated/extraVars/'
 
@@ -21,6 +21,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Copy File
+      - name: List Files in Source Directory
         run: |
-          cp "${{ github.event.inputs.source_path }}" "${{ github.event.inputs.destination_path }}"
+          ls -la "${{ github.event.inputs.source_directory }}"
+
+      - name: Copy Files
+        run: |
+          cp -r "${{ github.event.inputs.source_directory }}." "${{ github.event.inputs.destination_directory }}"
