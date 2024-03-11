@@ -7,10 +7,10 @@ on:
         description:  'extraVars'
         required: true
       deploymentManifest:
-        description:  'Deployment manifest'
+        description:  'deploymentManifest'
         required: true
       inventory:
-        description:  'Inventory'
+        description:  'inventory'
         required: true
 jobs:
   copy_files:
