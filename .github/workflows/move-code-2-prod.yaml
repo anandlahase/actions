@@ -23,7 +23,7 @@ jobs:
 
       - name: List Files in Source Directory
         run: |
-          find ${{ github.workspace }}/${{ github.event.inputs.source_directory }} -type f -name "*.json"
+          find ${{ github.event.inputs.source_directory }} -type f -name "*.json"
 
       - name: Copy Files
         run: |
