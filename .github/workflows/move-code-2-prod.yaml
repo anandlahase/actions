@@ -10,6 +10,9 @@ on:
       extraVars:
         description:  'extraVars'
         required: true
+        default: 'null'
+        paths: './non-prod/dedicated/extraVars/**'
+        type: string
       deploymentManifest:
         description:  'deploymentManifest'
         required: true
