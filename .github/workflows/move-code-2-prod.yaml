@@ -23,4 +23,4 @@ jobs:
 
       - name: Copy File
         run: |
-          cp "${{ github.workspace }}/${{ github.event.inputs.source_path }}" "${{ github.workspace }}/${{ github.event.inputs.destination_path }}"
+          cp "${{ github.event.inputs.source_path }}" "${{ github.event.inputs.destination_path }}"
