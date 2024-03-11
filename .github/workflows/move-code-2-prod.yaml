@@ -24,6 +24,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: List files extraVars
-        uses: 
-        paths: |
-          './non-prod/dedicated/extraVars/* {{ source.extraVars }}'
+        uses: './non-prod/dedicated/extraVars/* {{ source.extraVars }}'
