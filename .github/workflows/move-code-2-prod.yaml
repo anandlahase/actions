@@ -6,11 +6,11 @@ on:
       source_path:
         description: 'Source Path'
         required: true
-        default: './non-prod/dedicated/extraVars/**'
+        default: ./non-prod/dedicated/extraVars/**
       destination_path:
         description: 'Destination Path'
         required: true
-        default: './prod/dedicated/extraVars/'
+        default: ./prod/dedicated/extraVars/
 
 jobs:
   copy_files:
