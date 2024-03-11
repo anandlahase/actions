@@ -21,6 +21,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: List Files in Source Directory
+        run: |
+          find ${{ github.event.inputs.source_directory }} -type f -name "*.json"
+
       - name: Copy Files
         run: |
           cp -r "${{ github.event.inputs.source_directory }}." "${{ github.event.inputs.destination_directory }}"
