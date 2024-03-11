@@ -6,11 +6,11 @@ on:
       source_directory:
         description: 'Source Directory'
         required: true
-        default: './non-prod/dedicated/extraVars/**.json'
+        default: 'main/non-prod/dedicated/extraVars/'
       destination_directory:
         description: 'Destination Directory'
         required: true
-        default: './prod/dedicated/extraVars/'
+        default: 'main/prod/dedicated/extraVars/'
 
 jobs:
   copy_files:
@@ -23,8 +23,8 @@ jobs:
 
       - name: List Files in Source Directory
         run: |
-          find "${{ github.event.inputs.source_directory }}"
+          find ${{ github.workspace }}/${{ github.event.inputs.source_directory }} -type f -name "*.json"
 
       - name: Copy Files
         run: |
-          cp -r "${{ github.event.inputs.source_directory }}." "${{ github.event.inputs.destination_directory }}"
+          cp -r ${{ github.event.inputs.source_directory }}* ${{ github.event.inputs.destination_directory }}
