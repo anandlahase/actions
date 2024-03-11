@@ -18,22 +18,6 @@ on:
         description: 'Destination Directory'
         required: true
         default: './prod/dedicated/extraVars'
-      source_directory:
-        description: 'Source Directory'
-        required: true
-        default: './non-prod/dedicated/deploymentManifest'
-      destination_directory:
-        description: 'Destination Directory'
-        required: true
-        default: './prod/dedicated/deploymentManifest'
-      source_directory:
-        description: 'Source Directory'
-        required: true
-        default: './non-prod/dedicated/inventory'
-      destination_directory:
-        description: 'Destination Directory'
-        required: true
-        default: './prod/dedicated/inventory'
 
 jobs:
   copy_files:
