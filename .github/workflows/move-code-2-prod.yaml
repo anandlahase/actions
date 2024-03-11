@@ -24,13 +24,8 @@ jobs:
       - name: List Files in Source Directory
         run: |
           echo "Source Directory Contents:"
-          ls -la ${{ github.event.inputs.source_directory }}
+          ls -la "${{ github.event.inputs.source_directory }}"
 
       - name: Copy Files
         run: |
-          cp -r ${{ github.event.inputs.source_directory }}* ${{ github.event.inputs.destination_directory }}
-
-      - name: List Files in Destination Directory
-        run: |
-          echo "Destination Directory Contents:"
-          ls -la ${{ github.event.inputs.destination_directory }}
+          cp -r "${{ github.event.inputs.source_directory }}/"* "${{ github.event.inputs.destination_directory }}/"
