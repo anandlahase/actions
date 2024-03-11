@@ -23,7 +23,7 @@ jobs:
 
       - name: List Files in Source Directory
         run: |
-          ls -la "${{ github.event.inputs.source_directory }}"
+          find "${{ github.event.inputs.source_directory }}"
 
       - name: Copy Files
         run: |
