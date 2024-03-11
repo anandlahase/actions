@@ -6,7 +6,7 @@ on:
       source_directory:
         description: 'Source Directory'
         required: true
-        default: 'non-prod/dedicated/extraVars/*.json'
+        default: 'non-prod/dedicated/extraVars/'
       destination_directory:
         description: 'Destination Directory'
         required: true
