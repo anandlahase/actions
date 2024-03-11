@@ -27,4 +27,4 @@ jobs:
 
       - name: Copy Files from Branch
         run: |
-          cp main/non-prod/dedicated/extraVars/* main/prod/dedicated/extraVars/
+          cp ./non-prod/dedicated/extraVars/* ./prod/dedicated/extraVars/
