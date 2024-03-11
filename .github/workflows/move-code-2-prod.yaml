@@ -3,14 +3,24 @@ name: Manual File Copy
 on:
   workflow_dispatch:
     inputs:
-      source_directory:
+      extraVars:
+        description:  'extraVars'
+        required: true
+        source_directory:
         description: 'Source Directory'
         required: true
         default: 'non-prod/dedicated/extraVars'
-      destination_directory:
+        destination_directory:
         description: 'Destination Directory'
         required: true
         default: 'prod/dedicated/extraVars'
+
+      deploymentManifest:
+        description:  'deploymentManifest'
+        required: true
+      inventory:
+        description:  'inventory'
+        required: true
 
 jobs:
   copy_files:
