@@ -3,16 +3,14 @@ name: Manual File Copy
 on:
   workflow_dispatch:
     inputs:
-      extraVars:
-        description: 'extraVars'
+      source_path:
+        description: 'Source Path'
         required: true
-        default: './non-prod/dedicated/extraVars/test.txt'
-      deploymentManifest:
-        description: 'deploymentManifest'
+        default: 'main/non-prod/dedicated/extraVars/**'
+      destination_path:
+        description: 'Destination Path'
         required: true
-      inventory:
-        description: 'inventory'
-        required: true
+        default: 'main/prod/dedicated/extraVars/'
 
 jobs:
   copy_files:
@@ -22,8 +20,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      
-     - name: List Directories
+
+      - name: Copy File
         run: |
-          echo "Directories in the repository:"
-          find . -type d
+          cp "${{ github.workspace }}/${{ github.event.inputs.source_path }}" "${{ github.workspace }}/${{ github.event.inputs.destination_path }}"
