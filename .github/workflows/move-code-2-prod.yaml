@@ -10,7 +10,7 @@ on:
         - extraVars
         - deploymentManifest
         - inventory
-     source_directory:
+      source_directory:
         description: 'Source Directory'
         required: true
         default: './non-prod/dedicated/extraVars'
