@@ -2,7 +2,16 @@ name: Manual File Copy
 
 on:
   workflow_dispatch:
-
+    inputs:
+      extraVars:
+        description:  'extraVars'
+        required: true
+      deploymentManifest:
+        description:  'Deployment manifest'
+        required: true
+      inventory:
+        description:  'Inventory'
+        required: true
 jobs:
   copy_files:
     name: Copy Files
