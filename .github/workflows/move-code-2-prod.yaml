@@ -1,13 +1,15 @@
 name: Manual File Copy
 
 on:
+  push:
+    branches:
+      - main
+
   workflow_dispatch:
     inputs:
       extraVars:
         description:  'extraVars'
         required: true
-        paths:
-          - './non-prod/dedicated/extraVars/**'
       deploymentManifest:
         description:  'deploymentManifest'
         required: true
@@ -23,7 +25,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: List Directories
+      - name: Copy Files from Branch
         run: |
-          echo "Directories in the main branch:"
-          git ls-tree -d --name-only main
+          cp main/non-prod/dedicated/extraVars/* main/prod/dedicated/extraVars/
