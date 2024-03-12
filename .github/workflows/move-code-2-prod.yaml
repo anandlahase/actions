@@ -4,7 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       option:
-        description: 'Choose an option (extraVars, inventory, deploymentManifest)'
+        description: 'extraVars'
+        required: true
+        description: 'inventory'
+        required: true
+        description: 'deploymentManifest'
         required: true
 
 jobs:
