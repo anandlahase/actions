@@ -41,5 +41,5 @@ jobs:
     steps:
       - name: Copy Files
         run: |
-          cp -r ./non-prod/dedicated/extraVars/** ./prod/dedicated/extraVars/
+          cp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
               
