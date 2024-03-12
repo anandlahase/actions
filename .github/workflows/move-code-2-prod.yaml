@@ -6,7 +6,7 @@ on:
       destination:
         description: 'Destination Folder'
         required: true
-        options: |
+        choice: |
           main/prod/dedicated/extraVars/
           main/prod/dedicated/inventory/
           main/prod/dedicated/deploymentManifest/
