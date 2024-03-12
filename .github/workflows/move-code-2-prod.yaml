@@ -5,13 +5,13 @@ on:
     inputs:
       extraVars:
         description: 'extraVars'
-        required: true
+        required: false
       inventory:
         description: 'inventory'
-        required: true
+        required: false
       deploymentManifest:
         description: 'deploymentManifest'
-        required: true
+        required: false
 
 jobs:
   copy_files:
