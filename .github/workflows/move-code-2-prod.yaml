@@ -1,40 +1,35 @@
-name: Manual File Copy
+name: Test
 
 on:
+  push:
+    tags-ignore:
+      - '*'
+    branches:
+      - 'main'
+  pull_request:
   workflow_dispatch:
-    branches: [ main ]
-    paths: 
-       - 'non-prod/dedicated/extraVars/**'
-       - 'prod/dedicated/extraVars/'
-    inputs:
-      choice:
-        type: choice
-        description: Make a choice
-        options:
-        - extraVars
-        - deploymentManifest
-        - inventory
-            
+
 jobs:
-  source_files:
-    name: Copy Files
+  list-files:
     runs-on: ubuntu-latest
-
+    outputs:
+      paths: ${{ steps.list-files.outputs.paths }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: List Files for extraVars
+      - name: List Files
+        id: list-files
+        uses: mirko-felice/list-files-action@v3.0.5
+        with:
+          repo: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          path: "."
+          ext: ".yml"
+  Test:
+    needs: list-files
+    strategy:
+      matrix:
+        paths: ${{ fromJson(needs.list-files.outputs.paths) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output results
         run: |
-          echo "extraVars Directory Contents:"
-          ls -la ./non-prod/dedicated/extraVars/*
-
-      - name: List Files in Destination Directory
-        run: |
-          echo "Destination Directory Contents:"
-          ls -la ./non-prod/dedicated/extraVars/*
-
-      - name: Copy Files
-        run: |
-          cp -r ./non-prod/dedicated/extraVars/** ./prod/dedicated/extraVars/
-              
+          echo ${{ matrix.paths }}
