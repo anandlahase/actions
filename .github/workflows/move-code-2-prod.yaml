@@ -27,7 +27,7 @@ jobs:
             IFS=':' read -ra pair <<< "$path"
             source="${pair[0]}"
             echo "Files in $source:"
-            ls -la "$source"
+            ls -la "$/$source"
             files+=($(ls -1 "$/$source"))
           done
           echo "::set-output name=files::${files[*]}"
