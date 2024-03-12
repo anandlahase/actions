@@ -35,6 +35,5 @@ jobs:
           ls -la ./non-prod/dedicated/extraVars/*
 
       - name: Copy Files
-        run: |
-          chmod u+x 
+        run: | 
           sudo cp -r ./non-prod/dedicated/extraVars/v1.2.0#networkConfigs.json ./prod/dedicated/extraVars/      
