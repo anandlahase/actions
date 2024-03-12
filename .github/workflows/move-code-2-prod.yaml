@@ -1,41 +1,41 @@
-name: Manual File Copy
+name: Copy Files within Main Branch
 
 on:
   workflow_dispatch:
-    branches: [ main ]
-    paths: 
-       - 'non-prod/dedicated/extraVars/**'
-       - 'prod/dedicated/extraVars/'
     inputs:
-      choice:
-        type: choice
-        description: Make a choice
-        options:
-        - extraVars
-        - deploymentManifest
-        - inventory
-            
+      extraVars:
+        description: 'extraVars'
+        required: true
+        paths: |
+          main/non-prod/dedicated/extraVars/
+      inventory:
+        description: 'inventory'
+        required: true
+        paths: |
+          main/non-prod/dedicated/inventory/
+      deploymentManifest:
+        description: 'deploymentManifest'
+        required: true
+        paths: |
+          main/non-prod/dedicated/deploymentManifest/
+
 jobs:
-  source_files:
+  copy_files:
     name: Copy Files
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: List Files for extraVars
-        run: |
-          echo "extraVars Directory Contents:"
-          ls -la ./non-prod/dedicated/extraVars/*
-
-      - name: List Files in Destination Directory
-        run: |
-          echo "Destination Directory Contents:"
-          ls -la ./non-prod/dedicated/extraVars/*
-
-
+      # Copy files based on selected options
       - name: Copy Files
         run: |
-          cp ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
-
+          IFS=',' read -ra extraVars <<< "${{ github.event.inputs.extraVars }}"
+          IFS=',' read -ra inventory <<< "${{ github.event.inputs.inventory }}"
+          IFS=',' read -ra deploymentManifest <<< "${{ github.event.inputs.deploymentManifest }}"
+          for source in "${extraVars[@]}" "${inventory[@]}" "${deploymentManifest[@]}"; do
+            destination="main/prod/dedicated/${source#main/non-prod/dedicated/}"
+            echo "Copying files from $source to $destination"
+            cp -r "${{ github.workspace }}/$source/"* "${{ github.workspace }}/$destination"
+          done
