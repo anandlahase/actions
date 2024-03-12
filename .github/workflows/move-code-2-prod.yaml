@@ -34,22 +34,6 @@ jobs:
           echo "Destination Directory Contents:"
           ls -la ./prod/dedicated/extraVars/
 
-  destination_files:
-    name: destination Files
-    runs-on: ubuntu-latest
-      
-    steps:
-
-       - name: List Files for extraVars
-        run: |
-          echo "extraVars Directory Contents:"
-          ls -la ./non-prod/dedicated/extraVars/*
-
-      - name: List Files in Destination Directory
-        run: |
-          echo "Destination Directory Contents:"
-          ls -la ./prod/dedicated/extraVars/
-          
       - name: Copy Files
         run: |
           cp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
