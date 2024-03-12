@@ -3,10 +3,10 @@ name: Copy Files within Main Branch
 on:
   workflow_dispatch:
     inputs:
-      destination:
+      choice:
         description: 'Destination Folder'
         required: true
-        choice: |
+        options: |
           main/prod/dedicated/extraVars/
           main/prod/dedicated/inventory/
           main/prod/dedicated/deploymentManifest/
