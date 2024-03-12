@@ -36,5 +36,5 @@ jobs:
 
       - name: Copy Files
         run: |
-          ./github/workflows/copy-file.sh
+          cp -r "./non-prod/dedicated/extraVars/** ./prod/dedicated/extraVars/"
               
