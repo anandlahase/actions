@@ -20,14 +20,14 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2 
 
       - name: Copy Files based on option
         run: |
           if [ -n "${{ github.event.inputs.extraVars }}" ]; then
             touch test.txt
-            touch non-prod/dedicated/extraVars/test.test
-            touch prod/dedicated/extraVars/test.test
+            touch non-prod/dedicated/extraVars/test.txt
+            touch prod/dedicated/extraVars/test.txt
             cp -r non-prod/dedicated/extraVars/${{ github.event.inputs.extraVars }} prod/dedicated/extraVars/
           fi
           if [ -n "${{ github.event.inputs.inventory }}" ]; then
