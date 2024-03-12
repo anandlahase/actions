@@ -1,40 +1,33 @@
-name: Manual File Copy
+name: Copy Files within Main Branch
 
 on:
   workflow_dispatch:
-    branches: [ main ]
-    paths: 
-       - 'non-prod/dedicated/extraVars/**'
-       - 'prod/dedicated/extraVars/'
     inputs:
-      choice:
-        type: choice
-        description: Make a choice
-        options:
-        - extraVars
-        - deploymentManifest
-        - inventory
-            
+      source_directory:
+        description: 'Source Directory'
+        required: true
+        default: './non-prod/dedicated/extraVars/'
+      destination_directory:
+        description: 'Destination Directory'
+        required: true
+        default: './prod/dedicated/extraVars/''
+
 jobs:
-  source_files:
+  copy_files:
     name: Copy Files
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: List Files for extraVars
+      # List files in the source directory for workflow inputs
+      - name: List Files in Source Directory
         run: |
-          echo "extraVars Directory Contents:"
-          ls -la ./non-prod/dedicated/extraVars/*
+          echo "Files in Source Directory:"
+          ls -la "${{ github.workspace }}/${{ github.event.inputs.source_directory }}"
 
-      - name: List Files in Destination Directory
-        run: |
-          echo "Destination Directory Contents:"
-          ls -la ./prod/dedicated/extraVars/
-
+      # Copy files from source to destination directory
       - name: Copy Files
         run: |
-          cp -r ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
-              
+          cp -r "${{ github.workspace }}/${{ github.event.inputs.source_directory }}/"* "${{ github.workspace }}/${{ github.event.inputs.destination_directory }}"
