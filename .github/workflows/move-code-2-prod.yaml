@@ -2,6 +2,10 @@ name: Manual File Copy
 
 on:
   workflow_dispatch:
+    branches: [ main ]
+    paths: 
+       - 'non-prod/dedicated/extraVars/**'
+       - 'prod/dedicated/extraVars/**'
     inputs:
       choice:
         type: choice
@@ -32,5 +36,5 @@ jobs:
 
       - name: Copy Files
         run: |
-          chmod u+x ./non-prod/dedicated/extraVars/v1.2.0#networkConfigs.json
+          chmod u+x 
           sudo cp -r ./non-prod/dedicated/extraVars/v1.2.0#networkConfigs.json ./prod/dedicated/extraVars/      
