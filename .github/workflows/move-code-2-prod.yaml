@@ -35,7 +35,6 @@ jobs:
           ls -la ./non-prod/dedicated/extraVars/*
 
       - name: Copy Files
-        run: 
-          sudo chmod u+x /scripts/copy-file.sh
-          ./scripts/copy-file.sh
+        run: |
+          ./github/workflow/copy-file.sh
               
