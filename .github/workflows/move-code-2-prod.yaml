@@ -10,7 +10,7 @@ on:
       destination_directory:
         description: 'Destination Directory'
         required: true
-        default: './prod/dedicated/extraVars/''
+        default: './prod/dedicated/extraVars/'
 
 jobs:
   copy_files:
