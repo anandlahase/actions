@@ -6,10 +6,11 @@ on:
       choice:
         description: 'Destination Folder'
         required: true
-        options: |
-          main/prod/dedicated/extraVars/
-          main/prod/dedicated/inventory/
-          main/prod/dedicated/deploymentManifest/
+        choice:
+          options: |
+            main/prod/dedicated/extraVars/
+            main/prod/dedicated/inventory/
+            main/prod/dedicated/deploymentManifest/
 
 jobs:
   copy_files:
