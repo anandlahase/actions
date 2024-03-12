@@ -25,11 +25,11 @@ jobs:
       - name: Copy Files based on option
         run: |
           if [ -n "${{ github.event.inputs.extraVars }}" ]; then
-            cp -R ./non-prod/dedicated/extraVars/${{ github.event.inputs.extraVars }} ./prod/dedicated/extraVars/
+            cp -r non-prod/dedicated/extraVars/${{ github.event.inputs.extraVars }} prod/dedicated/extraVars/
           fi
           if [ -n "${{ github.event.inputs.inventory }}" ]; then
-            cp -R ./non-prod/dedicated/inventory/${{ github.event.inputs.inventory }} ./prod/dedicated/inventory/
+            cp -R non-prod/dedicated/inventory/${{ github.event.inputs.inventory }} prod/dedicated/inventory/
           fi
           if [ -n "${{ github.event.inputs.deploymentManifest }}" ]; then
-            cp -R ./non-prod/dedicated/deploymentManifest/${{ github.event.inputs.deploymentManifest }} ./prod/dedicated/deploymentManifest/
+            cp -R non-prod/dedicated/deploymentManifest/${{ github.event.inputs.deploymentManifest }} prod/dedicated/deploymentManifest/
           fi
