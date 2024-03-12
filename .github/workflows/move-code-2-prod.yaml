@@ -1,9 +1,6 @@
 name: Copy Files within Main Branch
 
 on:
-
-  branches:
-      - main
   workflow_dispatch:
     inputs:
       extraVars:
