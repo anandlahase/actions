@@ -6,12 +6,15 @@ on:
       extraVars:
         description: 'extraVars'
         required: true
+        default: '*.json'
       inventory:
         description: 'inventory'
         required: true
+        default: '*.json'
       deploymentManifest:
         description: 'deploymentManifest'
         required: true
+        default: '*.json'
 
 jobs:
   copy_files:
@@ -24,19 +27,12 @@ jobs:
 
       - name: Copy Files based on option
         run: |
-          option="${{ github.event.inputs.option }}"
-          case $option in
-            extraVars)
-              cp -R ./non-prod/dedicated/extraVars/ ./prod/dedicated/extraVars/
-              ;;
-            inventory)
-              cp -R ./non-prod/dedicated/inventory/ ./prod/dedicated/inventory/
-              ;;
-            deploymentManifest)
-              cp -R ./non-prod/dedicated/deploymentManifest/ ./prod/dedicated/deploymentManifest/
-              ;;
-            *)
-              echo "Invalid option selected."
-              exit 1
-              ;;
-          esac
+          if [ -n "${{ github.event.inputs.extraVars }}" ]; then
+            cp -R ./non-prod/dedicated/extraVars/${{ github.event.inputs.extraVars }} ./prod/dedicated/extraVars/
+          fi
+          if [ -n "${{ github.event.inputs.inventory }}" ]; then
+            cp -R ./non-prod/dedicated/inventory/${{ github.event.inputs.inventory }} ./prod/dedicated/inventory/
+          fi
+          if [ -n "${{ github.event.inputs.deploymentManifest }}" ]; then
+            cp -R ./non-prod/dedicated/deploymentManifest/${{ github.event.inputs.deploymentManifest }} ./prod/dedicated/deploymentManifest/
+          fi
