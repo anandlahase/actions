@@ -3,14 +3,10 @@ name: Copy Files within Main Branch
 on:
   workflow_dispatch:
     inputs:
-      source_directory:
-        description: 'Source Directory'
+      paths:
+        description: 'Source and Destination Paths (Format: source1:extraVars,source2:inventory)'
         required: true
-        default: './non-prod/dedicated/extraVars/'
-      destination_directory:
-        description: 'Destination Directory'
-        required: true
-        default: './prod/dedicated/extraVars/'
+        default: './non-prod/dedicated/extraVars:extraVars,./non-prod/dedicated/inventory:inventory'
 
 jobs:
   copy_files:
@@ -21,13 +17,45 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # List files in the source directory for workflow inputs
-      - name: List Files in Source Directory
+      # List files in the source directories for workflow inputs
+      - name: List Files in Source Directories
+        id: list_files
         run: |
-          echo "Files in Source Directory:"
-          ls -la "${{ github.workspace }}/${{ github.event.inputs.source_directory }}"
+          IFS=',' read -ra paths <<< "${{ github.event.inputs.paths }}"
+          files=()
+          for path in "${paths[@]}"; do
+            IFS=':' read -ra pair <<< "$path"
+            source="${pair[0]}"
+            echo "Files in $source:"
+            ls -la "$/$source"
+            files+=($(ls -1 "$/$source"))
+          done
+          echo "::set-output name=files::${files[*]}"
 
-      # Copy files from source to destination directory
+      # Select files to copy
+      - name: Select Files
+        id: select_files
+        run: |
+          echo "${{ steps.list_files.outputs.files }}" | tr ' ' '\n' | awk '{print "- " $0}' > files_list.txt
+          cat files_list.txt
+
+      # User selects files to copy from the list of files
+      - name: Select Files to Copy
+        id: select_files_to_copy
+        uses: actions/checkout@v2
+        with:
+          repository: actions/starter-workflows
+          path: .github/workflows
+          ref: 1.1
+
+      # Copy selected files to the destination directories
       - name: Copy Files
         run: |
-          cp -r "${{ github.workspace }}/${{ github.event.inputs.source_directory }}/"* "${{ github.workspace }}/${{ github.event.inputs.destination_directory }}"
+          IFS=',' read -ra paths <<< "${{ github.event.inputs.paths }}"
+          for path in "${paths[@]}"; do
+            IFS=':' read -ra pair <<< "$path"
+            source="${pair[0]}"
+            destination="${pair[1]}"
+            echo "Copying files from $source to $destination"
+            cp -r "$/$source/${{ steps.select_files_to_copy.outputs.selected_file }}" "$/$destination/"
+          done
