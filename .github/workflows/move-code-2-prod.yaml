@@ -6,15 +6,15 @@ on:
       extraVars:
         description: 'extraVars'
         required: true
-        default: '*.json'
+        default: '.json'
       inventory:
         description: 'inventory'
         required: true
-        default: '*.json'
+        default: '.json'
       deploymentManifest:
         description: 'deploymentManifest'
         required: true
-        default: '*.json'
+        default: '.json'
 
 jobs:
   copy_files:
