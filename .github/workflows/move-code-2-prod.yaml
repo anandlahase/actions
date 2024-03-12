@@ -3,11 +3,13 @@ name: Copy Files within Main Branch
 on:
   workflow_dispatch:
     inputs:
-      option:
+      extraVars:
         description: 'extraVars'
         required: true
+      inventory:
         description: 'inventory'
         required: true
+      deploymentManifest:
         description: 'deploymentManifest'
         required: true
 
