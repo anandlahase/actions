@@ -36,4 +36,4 @@ jobs:
 
       - name: Copy Files
         run: |
-          cp -R ./non-prod/dedicated/extraVars/** ./prod/dedicated/extraVars/
+          cp -R ./non-prod/dedicated/extraVars/*.json ./prod/dedicated/extraVars/
