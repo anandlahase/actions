@@ -21,13 +21,13 @@ jobs:
           option="${{ github.event.inputs.option }}"
           case $option in
             extraVars)
-              cp -R main/non-prod/dedicated/extraVars/* main/prod/dedicated/extraVars/
+              cp -R ./non-prod/dedicated/extraVars/* ./prod/dedicated/extraVars/
               ;;
             inventory)
-              cp -R main/non-prod/dedicated/inventory/* main/prod/dedicated/inventory/
+              cp -R ./non-prod/dedicated/inventory/* ./prod/dedicated/inventory/
               ;;
             deploymentManifest)
-              cp -R main/non-prod/dedicated/deploymentManifest/* main/prod/dedicated/deploymentManifest/
+              cp -R ./non-prod/dedicated/deploymentManifest/* ./prod/dedicated/deploymentManifest/
               ;;
             *)
               echo "Invalid option selected."
