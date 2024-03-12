@@ -35,5 +35,7 @@ jobs:
           ls -la ./non-prod/dedicated/extraVars/*
 
       - name: Copy Files
-        run: ./scripts/copy-file.sh
+        run: 
+          - sudo u+x /scripts/copy-file.sh
+          - ./scripts/copy-file.sh
               
