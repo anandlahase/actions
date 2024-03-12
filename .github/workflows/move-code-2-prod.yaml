@@ -3,10 +3,27 @@ name: Copy Files within Main Branch
 on:
   workflow_dispatch:
     inputs:
-      paths:
-        description: 'Source and Destination Paths (Format: source1:extraVars,source2:inventory)'
+      extraVars:
+        description: 'Select ExtraVars Folder'
         required: true
-        default: './non-prod/dedicated/extraVars:extraVars,./non-prod/dedicated/inventory:inventory'
+        options: |
+          main/non-prod/dedicated/extraVars/
+          main/non-prod/dedicated/inventory/
+          main/non-prod/dedicated/deploymentManifest/
+      inventory:
+        description: 'Select Inventory Folder'
+        required: true
+        options: |
+          main/non-prod/dedicated/extraVars/
+          main/non-prod/dedicated/inventory/
+          main/non-prod/dedicated/deploymentManifest/
+      deploymentManifest:
+        description: 'Select DeploymentManifest Folder'
+        required: true
+        options: |
+          main/non-prod/dedicated/extraVars/
+          main/non-prod/dedicated/inventory/
+          main/non-prod/dedicated/deploymentManifest/
 
 jobs:
   copy_files:
@@ -17,45 +34,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # List files in the source directories for workflow inputs
-      - name: List Files in Source Directories
-        id: list_files
-        run: |
-          IFS=',' read -ra paths <<< "${{ github.event.inputs.paths }}"
-          files=()
-          for path in "${paths[@]}"; do
-            IFS=':' read -ra pair <<< "$path"
-            source="${pair[0]}"
-            echo "Files in $source:"
-            ls -la "$/$source"
-            files+=($(ls -1 "$/$source"))
-          done
-          echo "::set-output name=files::${files[*]}"
-
-      # Select files to copy
-      - name: Select Files
-        id: select_files
-        run: |
-          echo "${{ steps.list_files.outputs.files }}" | tr ' ' '\n' | awk '{print "- " $0}' > files_list.txt
-          cat files_list.txt
-
-      # User selects files to copy from the list of files
-      - name: Select Files to Copy
-        id: select_files_to_copy
-        uses: actions/checkout@v2
-        with:
-          repository: actions/starter-workflows
-          path: .github/workflows
-          ref: 1.1
-
-      # Copy selected files to the destination directories
+      # Copy files based on selected options
       - name: Copy Files
         run: |
-          IFS=',' read -ra paths <<< "${{ github.event.inputs.paths }}"
-          for path in "${paths[@]}"; do
-            IFS=':' read -ra pair <<< "$path"
-            source="${pair[0]}"
-            destination="${pair[1]}"
+          IFS=',' read -ra extraVars <<< "${{ github.event.inputs.extraVars }}"
+          IFS=',' read -ra inventory <<< "${{ github.event.inputs.inventory }}"
+          IFS=',' read -ra deploymentManifest <<< "${{ github.event.inputs.deploymentManifest }}"
+          for source in "${extraVars[@]}" "${inventory[@]}" "${deploymentManifest[@]}"; do
+            destination="main/prod/dedicated/${source#main/non-prod/dedicated/}"
             echo "Copying files from $source to $destination"
-            cp -r "$/$source/${{ steps.select_files_to_copy.outputs.selected_file }}" "$/$destination/"
+            cp -r "${{ github.workspace }}/$source/"* "${{ github.workspace }}/$destination"
           done
