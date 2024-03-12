@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths: 
        - 'non-prod/dedicated/extraVars/**'
-       - 'prod/dedicated/extraVars/**'
+       - 'prod/dedicated/extraVars/'
     inputs:
       choice:
         type: choice
@@ -35,5 +35,5 @@ jobs:
           ls -la ./non-prod/dedicated/extraVars/*
 
       - name: Copy Files
-        run: | 
-          sudo cp -r ./non-prod/dedicated/extraVars/v1.2.0#networkConfigs.json ./prod/dedicated/extraVars/      
+        run: ./scripts/copy-file.sh
+              
