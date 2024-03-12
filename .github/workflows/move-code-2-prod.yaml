@@ -25,7 +25,9 @@ jobs:
       - name: Copy Files based on option
         run: |
           if [ -n "${{ github.event.inputs.extraVars }}" ]; then
-            touch test.txt non-prod/dedicated/extraVars/ 
+            touch test.txt
+            touch non-prod/dedicated/extraVars/test.test
+            touch prod/dedicated/extraVars/test.test
             cp -r non-prod/dedicated/extraVars/${{ github.event.inputs.extraVars }} prod/dedicated/extraVars/
           fi
           if [ -n "${{ github.event.inputs.inventory }}" ]; then
