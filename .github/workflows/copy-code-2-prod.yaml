@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       choice:
-        type: choice
-        description: 'Select input to update'
+        description: 'Select input to update: extraVars, inventory, deploymentManifest'
         required: true
+        default: 'extraVars'
         options:
-          - extraVars
-          - inventory
-          - deploymentManifest
+          extraVars: 'Update extraVars'
+          inventory: 'Update inventory'
+          deploymentManifest: 'Update deploymentManifest'
 
 jobs:
   update_and_merge:
@@ -20,7 +20,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Run any necessary build or setup steps here
+      - name: Validate Input
+        id: validate_input
+        run: |
+          choice="${{ github.event.inputs.choice }}"
+          if [[ $choice != "extraVars" && $choice != "inventory" && $choice != "deploymentManifest" ]]; then
+            echo "Invalid choice. Please choose one of: extraVars, inventory, deploymentManifest"
+            exit 1
+          fi
+          echo "::set-output name=CHOICE::$choice"
 
       - name: Update Dropdown Inputs
         id: update_inputs
@@ -47,13 +55,14 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v3
         with:
-          title: "Update ${{ github.event.inputs.choice }} dropdown inputs"
-          branch: update-${{ github.event.inputs.choice }}-inputs
-          commit-message: "Update ${{ github.event.inputs.choice }} dropdown inputs"
+          title: "Update $CHOICE dropdown inputs"
+          branch: update-$CHOICE-inputs
+          commit-message: "Update $CHOICE dropdown inputs"
           body: |
-            Automated update of ${{ github.event.inputs.choice }} dropdown inputs.
+            Automated update of $CHOICE dropdown inputs.
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Rest of your workflow steps
       - name: Wait for Pull Request Approval
         id: wait_for_approval
         if: steps.create_pr.outputs.pull-request-created == 'true'
