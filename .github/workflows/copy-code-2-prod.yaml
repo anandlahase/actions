@@ -12,6 +12,10 @@ on:
           inventory: 'Update inventory'
           deploymentManifest: 'Update deploymentManifest'
 
+  push:
+    paths:
+      - 'prod/**'  # Specify the directory structure where changes should trigger the workflow
+
 jobs:
   update_and_merge:
     runs-on: ubuntu-latest
