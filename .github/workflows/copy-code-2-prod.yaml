@@ -1,15 +1,16 @@
 name: Update and Merge Workflow
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       choice:
-        description: 'Choose the input to update'
+        description: 'Select input to update'
         required: true
-        default: 'extraVars' # Default value
+        default: 'extraVars'
+        options:
+          - extraVars
+          - inventory
+          - deploymentManifest
 
 jobs:
   update_and_merge:
