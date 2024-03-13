@@ -16,19 +16,8 @@ on:
     paths:
       - 'prod/extraVars'  # Specify the directory structure where changes should trigger the workflow
 
+
 jobs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Create folder
-        run: |
-          mkdir -p prod/extraVars
-          mkdir -p prod/inventory
-          mkdir -p prod/deploymentManifest
-
-
-jobs1:
   update_and_merge:
     runs-on: ubuntu-latest
 
@@ -36,7 +25,14 @@ jobs1:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Checkout
+        uses: actions/checkout@v2
 
+      - name: Create folder
+        run: |
+          mkdir -p prod/extraVars
+          mkdir -p prod/inventory
+          mkdir -p prod/deploymentManifest
 
       - name: Validate Input
         id: validate_input
