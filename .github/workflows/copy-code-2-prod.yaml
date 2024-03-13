@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
     inputs:
       choice:
-        type: choice
         description: 'Select input to update'
         required: true
         options:
@@ -25,7 +24,7 @@ jobs:
       - name: Update Dropdown Inputs
         id: update_inputs
         run: |
-          choice="$INPUT_CHOICE"
+          choice="$CHOICE"
           case $choice in
             "extraVars")
               cp main/non-prod/extraVars/*.json main/prod/extraVars/
