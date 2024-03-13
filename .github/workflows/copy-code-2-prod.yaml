@@ -14,7 +14,7 @@ on:
 
   push:
     paths:
-      - 'prod/**'  # Specify the directory structure where changes should trigger the workflow
+      - 'prod/extraVars'  # Specify the directory structure where changes should trigger the workflow
 
 jobs:
   update_and_merge:
