@@ -1,35 +1,79 @@
-name: Copy Files within Main Branch
+name: Update and Merge Workflow
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
-      extraVars:
-        description: 'extraVars'
-        required: false
-      inventory:
-        description: 'inventory'
-        required: false
-      deploymentManifest:
-        description: 'deploymentManifest'
-        required: false
+      choice:
+        description: 'Choose the input to update'
+        required: true
+        default: 'extraVars' # Default value
 
 jobs:
-  copy_files:
-    name: Copy Files
+  update_and_merge:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Copy selective files based on selected options
-      - name: Copy Files
+      # Run any necessary build or setup steps here
+
+      - name: Update Dropdown Inputs
+        id: update_inputs
         run: |
-          IFS=',' read -ra extraVars <<< "${{ github.event.inputs.extraVars }}"
-          IFS=',' read -ra inventory <<< "${{ github.event.inputs.inventory }}"
-          IFS=',' read -ra deploymentManifest <<< "${{ github.event.inputs.deploymentManifest }}"
-          for source in "${extraVars[@]}" "${inventory[@]}" "${deploymentManifest[@]}"; do
-            destination="prod/${source#non-prod/}"
-            echo "Copying selective files from $source to $destination"
-            cp -r "non-prod/$source/"{*.json} "prod/$destination"
-          done
+          choice="$INPUT_CHOICE"
+          case $choice in
+            "extraVars")
+              cp main/non-prod/extraVars/*.json main/prod/extraVars/
+              ;;
+            "inventory")
+              cp main/non-prod/inventory/*.json main/prod/inventory/
+              ;;
+            "deploymentManifest")
+              cp main/non-prod/deploymentManifest/*.json main/prod/deploymentManifest/
+              ;;
+            *)
+              echo "Invalid choice"
+              exit 1
+              ;;
+          esac
+          echo "Inputs updated for $choice"
+
+      - name: Create Pull Request
+        id: create_pr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Update ${{ github.event.inputs.choice }} dropdown inputs"
+          branch: update-${{ github.event.inputs.choice }}-inputs
+          commit-message: "Update ${{ github.event.inputs.choice }} dropdown inputs"
+          body: |
+            Automated update of ${{ github.event.inputs.choice }} dropdown inputs.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for Pull Request Approval
+        id: wait_for_approval
+        if: steps.create_pr.outputs.pull-request-created == 'true'
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}
+
+      - name: Merge Pull Request
+        if: steps.wait_for_approval.outputs.data.mergeable == true
+        uses: octokit/request-action@v2.x
+        with:
+          route: PUT /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}/merge
+          headers:
+            authorization: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            {
+              "merge_method": "squash"
+            }
+
+      - name: Copy Files to Destination Directory
+        if: steps.wait_for_approval.outputs.data.mergeable == true
+        run: |
+          # Optional: Perform any cleanup or additional steps after merging the PR
+          echo "Files copied to destination directory"
