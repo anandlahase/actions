@@ -31,5 +31,5 @@ jobs:
           for source in "${extraVars[@]}" "${inventory[@]}" "${deploymentManifest[@]}"; do
             destination="prod/${source#non-prod/}"
             echo "Copying selective files from $source to $destination"
-            cp -r "${{ github.workspace }}/$source/"{*.json} "${{ github.workspace }}/$destination"
+            cp -r "non-prod/$source/"{*.json} "prod/$destination"
           done
