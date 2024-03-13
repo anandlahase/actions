@@ -24,9 +24,9 @@ jobs:
 
       - name: Create prod/dedicated directories if not exist
         run: |
-          mkdir -p prod/dedicated/extraVars
-          mkdir -p prod/dedicated/inventory
-          mkdir -p prod/dedicated/deploymentManifest
+          mkdir -p prod/extraVars
+          mkdir -p prod/inventory
+          mkdir -p prod/deploymentManifest
 
       - name: Copy Files based on option
         run: |
