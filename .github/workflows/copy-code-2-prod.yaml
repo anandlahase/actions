@@ -24,6 +24,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Create prod/ directories if not exist
         run: |
           mkdir -p prod/extraVars
