@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       choice:
+        type: choice
         description: 'Select input to update'
         required: true
         options:
