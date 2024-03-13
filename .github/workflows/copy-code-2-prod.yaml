@@ -30,10 +30,11 @@ jobs:
           fi
           echo "::set-output name=CHOICE::$choice"
 
+
       - name: Update Dropdown Inputs
         id: update_inputs
         run: |
-          choice="$CHOICE"
+          choice="${{ steps.validate_input.outputs.CHOICE }}"
           case $choice in
             "extraVars")
               cp non-prod/extraVars/*.json prod/extraVars/
@@ -50,6 +51,7 @@ jobs:
               ;;
           esac
           echo "Inputs updated for $choice"
+
 
       - name: Create Pull Request
         id: create_pr
