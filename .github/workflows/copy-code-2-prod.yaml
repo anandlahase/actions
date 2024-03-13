@@ -15,7 +15,6 @@ on:
 jobs:
   update_and_merge:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
