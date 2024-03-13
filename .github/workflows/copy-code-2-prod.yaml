@@ -58,6 +58,9 @@ jobs:
           esac
           echo "Inputs updated for $choice"
 
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
 
       - name: Create Pull Request
         id: create_pr
