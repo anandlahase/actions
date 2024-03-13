@@ -22,17 +22,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2 
 
+      - name: Create prod/dedicated directories if not exist
+        run: |
+          mkdir -p prod/dedicated/extraVars
+          mkdir -p prod/dedicated/inventory
+          mkdir -p prod/dedicated/deploymentManifest
+
       - name: Copy Files based on option
         run: |
           if [ -n "${{ github.event.inputs.extraVars }}" ]; then
-            touch test.txt
-            touch non-prod/dedicated/extraVars/test.txt
-            touch prod/dedicated/extraVars/test.txt
-            cp -r non-prod/dedicated/extraVars/${{ github.event.inputs.extraVars }} prod/dedicated/extraVars/
+            cp -r non-prod/extraVars/${{ github.event.inputs.extraVars }} prod/extraVars/
           fi
           if [ -n "${{ github.event.inputs.inventory }}" ]; then
-            cp -R non-prod/dedicated/inventory/${{ github.event.inputs.inventory }} prod/dedicated/inventory/
+            cp -R non-prod/inventory/${{ github.event.inputs.inventory }} prod/inventory/
           fi
           if [ -n "${{ github.event.inputs.deploymentManifest }}" ]; then
-            cp -R non-prod/dedicated/deploymentManifest/${{ github.event.inputs.deploymentManifest }} prod/dedicated/deploymentManifest/
+            cp -R non-prod/deploymentManifest/${{ github.event.inputs.deploymentManifest }} prod/deploymentManifest/
           fi
