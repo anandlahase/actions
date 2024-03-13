@@ -20,22 +20,16 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2 
+        uses: actions/checkout@v2
 
-      - name: Create prod/dedicated directories if not exist
+      # Copy selective files based on selected options
+      - name: Copy Files
         run: |
-          mkdir -p prod/extraVars
-          mkdir -p prod/inventory
-          mkdir -p prod/deploymentManifest
-
-      - name: Copy Files based on option
-        run: |
-          if [ -n "${{ github.event.inputs.extraVars }}" ]; then
-            cp -r non-prod/extraVars/${{ github.event.inputs.extraVars }} prod/extraVars/
-          fi
-          if [ -n "${{ github.event.inputs.inventory }}" ]; then
-            cp -R non-prod/inventory/${{ github.event.inputs.inventory }} prod/inventory/
-          fi
-          if [ -n "${{ github.event.inputs.deploymentManifest }}" ]; then
-            cp -R non-prod/deploymentManifest/${{ github.event.inputs.deploymentManifest }} prod/deploymentManifest/
-          fi
+          IFS=',' read -ra extraVars <<< "${{ github.event.inputs.extraVars }}"
+          IFS=',' read -ra inventory <<< "${{ github.event.inputs.inventory }}"
+          IFS=',' read -ra deploymentManifest <<< "${{ github.event.inputs.deploymentManifest }}"
+          for source in "${extraVars[@]}" "${inventory[@]}" "${deploymentManifest[@]}"; do
+            destination="prod/dedicated/${source#non-prod/dedicated/}"
+            echo "Copying selective files from $source to $destination"
+            cp -r "${{ github.workspace }}/$source/"{*.json} "${{ github.workspace }}/$destination"
+          done
