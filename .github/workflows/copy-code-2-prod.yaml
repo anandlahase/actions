@@ -29,7 +29,7 @@ jobs:
           IFS=',' read -ra inventory <<< "${{ github.event.inputs.inventory }}"
           IFS=',' read -ra deploymentManifest <<< "${{ github.event.inputs.deploymentManifest }}"
           for source in "${extraVars[@]}" "${inventory[@]}" "${deploymentManifest[@]}"; do
-            destination="prod/dedicated/${source#non-prod/dedicated/}"
+            destination="prod/${source#non-prod/}"
             echo "Copying selective files from $source to $destination"
             cp -r "${{ github.workspace }}/$source/"{*.json} "${{ github.workspace }}/$destination"
           done
