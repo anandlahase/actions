@@ -51,6 +51,12 @@ jobs:
           esac
           echo "Inputs updated for $choice"
 
+  create_and_merge_pr:
+    runs-on: ubuntu-latest
+    needs: update_and_merge
+    if: github.event.inputs.choice && github.event.inputs.choice != ''
+
+    steps:
       - name: Create Pull Request
         id: create_pr
         uses: peter-evans/create-pull-request@v3
@@ -62,7 +68,6 @@ jobs:
             Automated update of $CHOICE dropdown inputs.
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Rest of your workflow steps
       - name: Wait for Pull Request Approval
         id: wait_for_approval
         if: steps.create_pr.outputs.pull-request-created == 'true'
