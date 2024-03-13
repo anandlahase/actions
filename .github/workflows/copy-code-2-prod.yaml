@@ -15,8 +15,8 @@ on:
   push:
     paths:
       - 'prod/extraVars'  # Specify the directory structure where changes should trigger the workflow
+
 jobs:
-  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,8 +36,6 @@ jobs1:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Checkout code
-        uses: actions/checkout@v2
 
 
       - name: Validate Input
