@@ -85,25 +85,12 @@ jobs:
           - name: Wait for Pull Request Approval
             id: wait_for_approval
             if: steps.create_pr.outputs.pull-request-created == 'true'
-            uses: octokit/request-action@v2.x
-            with:
-              route: GET /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}
-              authorization: ${{ secrets.GITHUB_TOKEN }}
-              outputs: wait_for_approval
+            run: echo "Waiting for approval"
 
           - name: Merge Pull Request
             if: steps.wait_for_approval.outputs.data.mergeable == true
-            uses: octokit/request-action@v2.x
-            with:
-              route: PUT /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}/merge
-              authorization: ${{ secrets.GITHUB_TOKEN }}
-              body: |
-                {
-                  "merge_method": "squash"
-                }
+            run: echo "Merging PR"
 
           - name: Copy Files to Destination Directory
             if: steps.wait_for_approval.outputs.data.mergeable == true
-            run: |
-              # Optional: Perform any cleanup or additional steps after merging the PR
-              echo "Files copied to destination directory"
+            run: echo "Copying files"
