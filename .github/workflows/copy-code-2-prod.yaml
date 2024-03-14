@@ -16,6 +16,12 @@ jobs:
   update_and_merge:
     runs-on: ubuntu-latest
     steps:
+      - name: Debugging Info
+        run: |
+          echo "Current Directory: $PWD"
+          echo "List Files: $(ls -a)"
+          git --version
+
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
