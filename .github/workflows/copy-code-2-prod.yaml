@@ -24,11 +24,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create Directories
-        run: |
-          mkdir -p prod/extraVars
-          mkdir -p prod/inventory
-          mkdir -p prod/deploymentManifest
-        shell: bash
+        run: mkdir -p prod/extraVars && mkdir -p prod/inventory && mkdir -p prod/deploymentManifest
 
       - name: Validate Input
         id: validate_input
@@ -39,14 +35,11 @@ jobs:
             exit 1
           fi
           echo "::set-output name=CHOICE::$choice"
-        shell: bash
 
       - name: Setup Approval Environment
         id: approval_setup
         if: github.event_name == 'workflow_dispatch'
-        run: |
-          echo "::set-output name=APPROVAL_REQUIRED::true"
-        shell: bash
+        run: echo "Setting up approval environment..."
 
       - name: Update and Merge
         needs: [validate_input, approval_setup]
@@ -73,7 +66,6 @@ jobs:
                   ;;
               esac
               echo "Inputs updated for $choice"
-            shell: bash
 
           - name: Create Pull Request
             id: create_pr
@@ -89,15 +81,12 @@ jobs:
           - name: Wait for Pull Request Approval
             id: wait_for_approval
             if: steps.create_pr.outputs.pull-request-created == 'true'
-            run: echo "Waiting for approval"
-            shell: bash
+            run: echo "Waiting for approval..."
 
           - name: Merge Pull Request
             if: steps.wait_for_approval.outputs.data.mergeable == true
-            run: echo "Merging PR"
-            shell: bash
+            run: echo "Merging PR..."
 
           - name: Copy Files to Destination Directory
             if: steps.wait_for_approval.outputs.data.mergeable == true
-            run: echo "Copying files"
-            shell: bash
+            run: echo "Copying files..."
