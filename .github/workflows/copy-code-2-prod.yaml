@@ -29,6 +29,9 @@ jobs:
         run: |
           mkdir -p prod/extraVars prod/inventory prod/deploymentManifest
 
+      - name: path
+        run: |
+          ls
       - name: Update Inputs
         run: |
           choice="${{ github.event.inputs.choice }}"
