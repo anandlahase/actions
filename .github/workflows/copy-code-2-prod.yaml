@@ -42,7 +42,7 @@ jobs:
         run: echo "Setting up approval environment..."
 
       - name: Update Inputs
-        if: steps.approval_setup.outputs.APPROVAL_REQUIRED == 'false' || github.event_name == 'push'
+        id: update_inputs
         run: |
           choice="${{ steps.validate_input.outputs.CHOICE }}"
           case $choice in
@@ -64,7 +64,6 @@ jobs:
 
       - name: Create Pull Request
         id: create_pr
-        if: steps.approval_setup.outputs.APPROVAL_REQUIRED == 'false' || github.event_name == 'push'
         uses: peter-evans/create-pull-request@v3
         with:
           title: "Update $CHOICE dropdown inputs"
@@ -86,3 +85,12 @@ jobs:
       - name: Copy Files to Destination Directory
         if: steps.wait_for_approval.outputs.data.mergeable == true
         run: echo "Copying files..."
+
+      - name: Commit and Push Changes
+        if: steps.wait_for_approval.outputs.data.mergeable == true
+        run: |
+          git config --global user.name "Your Name"
+          git config --global user.email "youremail@example.com"
+          git add .
+          git commit -m "Update $CHOICE dropdown inputs"
+          git push origin HEAD:update-$CHOICE-inputs
