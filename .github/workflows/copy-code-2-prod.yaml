@@ -27,7 +27,9 @@ jobs:
 
       - name: Create Directories
         run: |
-          mkdir -p prod/extraVars prod/inventory prod/deploymentManifest
+          mkdir -p prod/extraVars
+          mkdir -p prod/inventory 
+          mkdir -p prod/deploymentManifest
 
       - name: path
         run: |
