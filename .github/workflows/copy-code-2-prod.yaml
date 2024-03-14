@@ -31,7 +31,7 @@ jobs:
 
       - name: path
         run: |
-          ls
+          pwd
       - name: Update Inputs
         run: |
           choice="${{ github.event.inputs.choice }}"
