@@ -23,6 +23,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Create Directories
+        run: |
+          mkdir -p prod/extraVars
+          mkdir -p prod/inventory
+          mkdir -p prod/deploymentManifest
+
       - name: Validate Input
         id: validate_input
         run: |
@@ -82,6 +88,8 @@ jobs:
             uses: octokit/request-action@v2.x
             with:
               route: GET /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}
+              authorization: ${{ secrets.GITHUB_TOKEN }}
+              outputs: wait_for_approval
 
           - name: Merge Pull Request
             if: steps.wait_for_approval.outputs.data.mergeable == true
