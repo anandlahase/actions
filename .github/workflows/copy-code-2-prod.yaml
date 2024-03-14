@@ -21,15 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: main
+          path: job_repo
 
       - name: Create Directories
         run: |
-          mkdir -p prod/extraVars
-          mkdir -p prod/inventory 
-          mkdir -p prod/deploymentManifest
+          # mkdir -p job_repo/prod/extraVars
+          mkdir -p job_repo/prod/inventory 
+          # mkdir -p job_repo/prod/deploymentManifest
 
       - name: path
         run: |
