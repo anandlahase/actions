@@ -16,23 +16,12 @@ on:
     paths:
       - 'prod/extraVars'  # Specify the directory structure where changes should trigger the workflow
 
-
 jobs:
   update_and_merge:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Create folder
-        run: |
-          mkdir -p prod/extraVars
-          mkdir -p prod/inventory
-          mkdir -p prod/deploymentManifest
 
       - name: Validate Input
         id: validate_input
@@ -44,65 +33,69 @@ jobs:
           fi
           echo "::set-output name=CHOICE::$choice"
 
-
-      - name: Update Dropdown Inputs
-        id: update_inputs
+      - name: Setup Approval Environment
+        id: approval_setup
+        if: github.event_name == 'workflow_dispatch'
         run: |
-          choice="${{ steps.validate_input.outputs.CHOICE }}"
-          case $choice in
-            "extraVars")
-              cp non-prod/extraVars/*.json prod/extraVars/
-              ;;
-            "inventory")
-              cp non-prod/inventory/*.json prod/inventory/
-              ;;
-            "deploymentManifest")
-              cp non-prod/deploymentManifest/*.json prod/deploymentManifest/
-              ;;
-            *)
-              echo "Invalid choice"
-              exit 1
-              ;;
-          esac
-          echo "Inputs updated for $choice"
+          echo "::set-output name=APPROVAL_REQUIRED::true"
 
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Update and Merge
+        needs: [validate_input, approval_setup]
+        runs-on: ubuntu-latest
+        if: steps.approval_setup.outputs.APPROVAL_REQUIRED == 'false' || github.event_name == 'push'
+        steps:
+          - name: Update Inputs
+            id: update_inputs
+            run: |
+              choice="${{ steps.validate_input.outputs.CHOICE }}"
+              case $choice in
+                "extraVars")
+                  cp non-prod/extraVars/*.json prod/extraVars/
+                  ;;
+                "inventory")
+                  cp non-prod/inventory/*.json prod/inventory/
+                  ;;
+                "deploymentManifest")
+                  cp non-prod/deploymentManifest/*.json prod/deploymentManifest/
+                  ;;
+                *)
+                  echo "Invalid choice"
+                  exit 1
+                  ;;
+              esac
+              echo "Inputs updated for $choice"
 
+          - name: Create Pull Request
+            id: create_pr
+            uses: peter-evans/create-pull-request@v3
+            with:
+              title: "Update $CHOICE dropdown inputs"
+              branch: update-$CHOICE-inputs
+              commit-message: "Update $CHOICE dropdown inputs"
+              body: |
+                Automated update of $CHOICE dropdown inputs.
+              token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Pull Request
-        id: create_pr
-        uses: peter-evans/create-pull-request@v3
-        with:
-          title: "Update $CHOICE dropdown inputs"
-          branch: update-$CHOICE-inputs
-          commit-message: "Update $CHOICE dropdown inputs"
-          body: |
-            Automated update of $CHOICE dropdown inputs.
-          token: ${{ secrets.GITHUB_TOKEN }}
+          - name: Wait for Pull Request Approval
+            id: wait_for_approval
+            if: steps.create_pr.outputs.pull-request-created == 'true'
+            uses: octokit/request-action@v2.x
+            with:
+              route: GET /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}
 
-      
-      - name: Wait for Pull Request Approval
-        id: wait_for_approval
-        if: steps.create_pr.outputs.pull-request-created == 'true'
-        uses: octokit/request-action@v2.x
-        with:
-          route: GET /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}
+          - name: Merge Pull Request
+            if: steps.wait_for_approval.outputs.data.mergeable == true
+            uses: octokit/request-action@v2.x
+            with:
+              route: PUT /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}/merge
+              authorization: ${{ secrets.GITHUB_TOKEN }}
+              body: |
+                {
+                  "merge_method": "squash"
+                }
 
-      - name: Merge Pull Request
-        if: steps.wait_for_approval.outputs.data.mergeable == true
-        uses: octokit/request-action@v2.x
-        with:
-          route: PUT /repos/${{ github.repository }}/pulls/${{ steps.create_pr.outputs.pull-request-number }}/merge
-          authorization: ${{ secrets.GITHUB_TOKEN }}
-          body: |
-            {
-              "merge_method": "squash"
-            }
-
-
-      - name: Copy Files to Destination Directory
-        if: steps.wait_for_approval.outputs.data.mergeable == true
-        run: |
-          # Optional: Perform any cleanup or additional steps after merging the PR
-          echo "Files copied to destination directory"
+          - name: Copy Files to Destination Directory
+            if: steps.wait_for_approval.outputs.data.mergeable == true
+            run: |
+              # Optional: Perform any cleanup or additional steps after merging the PR
+              echo "Files copied to destination directory"
