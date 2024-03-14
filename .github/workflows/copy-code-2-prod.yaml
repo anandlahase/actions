@@ -12,34 +12,22 @@ on:
           inventory: 'Update inventory'
           deploymentManifest: 'Update deploymentManifest'
 
-  push:
-    paths:
-      - 'prod/extraVars/*'
-
 jobs:
   update_and_merge:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.choice }}
 
       - name: Create Directories
-        run: mkdir -p prod/extraVars prod/inventory prod/deploymentManifest
-
-      - name: Validate Input
-        id: validate_input
         run: |
-          choice="${{ github.event.inputs.choice }}"
-          if [[ $choice != "extraVars" && $choice != "inventory" && $choice != "deploymentManifest" ]]; then
-            echo "Invalid choice. Please choose one of: extraVars, inventory, deploymentManifest"
-            exit 1
-          fi
-          echo "::set-output name=CHOICE::$choice"
+          mkdir -p prod/extraVars prod/inventory prod/deploymentManifest
 
       - name: Update Inputs
-        id: update_inputs
         run: |
-          choice="${{ steps.validate_input.outputs.CHOICE }}"
+          choice="${{ github.event.inputs.choice }}"
           case $choice in
             "extraVars")
               cp non-prod/extraVars/*.json prod/extraVars/
@@ -57,22 +45,24 @@ jobs:
           esac
           echo "Inputs updated for $choice"
 
-      - name: Git Push
-        if: github.event_name == 'push'
+      - name: Git Add
+        run: git add .
+
+      - name: Git Commit
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add .
-          git commit -m "Automated update of $CHOICE dropdown inputs"
-          git push origin HEAD
+          git commit -m "Automated update of ${{ github.event.inputs.choice }} dropdown inputs"
+
+      - name: Git Push
+        run: git push origin HEAD
 
       - name: Create Pull Request
-        if: github.event_name == 'workflow_dispatch'
         uses: peter-evans/create-pull-request@v3
         with:
-          title: "Update $CHOICE dropdown inputs"
-          branch: update-$CHOICE-inputs
-          commit-message: "Automated update of $CHOICE dropdown inputs"
+          title: "Update ${{ github.event.inputs.choice }} dropdown inputs"
+          branch: update-${{ github.event.inputs.choice }}-inputs
+          commit-message: "Automated update of ${{ github.event.inputs.choice }} dropdown inputs"
           body: |
-            Automated update of $CHOICE dropdown inputs.
+            Automated update of ${{ github.event.inputs.choice }} dropdown inputs.
           token: ${{ secrets.GITHUB_TOKEN }}
