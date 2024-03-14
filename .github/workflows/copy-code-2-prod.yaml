@@ -14,7 +14,7 @@ on:
 
   push:
     paths:
-      - 'prod/extraVars'  # Specify the directory structure where changes should trigger the workflow
+      - 'prod/extraVars/*'
 
 jobs:
   update_and_merge:
@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create Directories
-        run: mkdir -p prod/extraVars && mkdir -p prod/inventory && mkdir -p prod/deploymentManifest
+        run: mkdir -p prod/extraVars prod/inventory prod/deploymentManifest
 
       - name: Validate Input
         id: validate_input
@@ -35,11 +35,6 @@ jobs:
             exit 1
           fi
           echo "::set-output name=CHOICE::$choice"
-
-      - name: Setup Approval Environment
-        id: approval_setup
-        if: github.event_name == 'workflow_dispatch'
-        run: echo "Setting up approval environment..."
 
       - name: Update Inputs
         id: update_inputs
@@ -62,35 +57,22 @@ jobs:
           esac
           echo "Inputs updated for $choice"
 
+      - name: Git Push
+        if: github.event_name == 'push'
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add .
+          git commit -m "Automated update of $CHOICE dropdown inputs"
+          git push origin HEAD
+
       - name: Create Pull Request
-        id: create_pr
+        if: github.event_name == 'workflow_dispatch'
         uses: peter-evans/create-pull-request@v3
         with:
           title: "Update $CHOICE dropdown inputs"
           branch: update-$CHOICE-inputs
-          commit-message: "Update $CHOICE dropdown inputs"
+          commit-message: "Automated update of $CHOICE dropdown inputs"
           body: |
             Automated update of $CHOICE dropdown inputs.
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Wait for Pull Request Approval
-        id: wait_for_approval
-        if: steps.create_pr.outputs.pull-request-created == 'true'
-        run: echo "Waiting for approval..."
-
-      - name: Merge Pull Request
-        if: steps.wait_for_approval.outputs.data.mergeable == true
-        run: echo "Merging PR..."
-
-      - name: Copy Files to Destination Directory
-        if: steps.wait_for_approval.outputs.data.mergeable == true
-        run: echo "Copying files..."
-
-      - name: Commit and Push Changes
-        if: steps.wait_for_approval.outputs.data.mergeable == true
-        run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "youremail@example.com"
-          git add .
-          git commit -m "Update $CHOICE dropdown inputs"
-          git push origin HEAD:update-$CHOICE-inputs
