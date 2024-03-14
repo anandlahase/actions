@@ -26,6 +26,19 @@ jobs:
           ref: main
           path: job_repo
 
+      - name: create branch
+        uses: peterjgrainger/action-create-branch@v2.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'new_branch'
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: new_branch
+          path: job_repo
+
       - name: Create Directories
         run: |
           # mkdir -p job_repo/prod/extraVars
